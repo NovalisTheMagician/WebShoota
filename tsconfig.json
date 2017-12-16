@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "sourceMap": false,
+        "allowSyntheticDefaultImports": true,
+        "outDir": "."
+    },
+    "exclude": [
+        "lib",
+        "tmp"
+    ]
+}
