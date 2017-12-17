@@ -3,6 +3,7 @@
         "target": "es6",
         "sourceMap": false,
         "allowSyntheticDefaultImports": true,
+        "outFile": "game.js",
         "outDir": "."
     },
     "exclude": [
