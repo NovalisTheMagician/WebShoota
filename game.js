@@ -27,3 +27,13 @@ class StartUp {
     }
 }
 StartUp.main();
+class Game {
+    init() {
+    }
+    update(dt) {
+    }
+}
+class Timer {
+    Update() {
+    }
+}
