@@ -1,24 +1,9 @@
-class StartUp {
+/// <reference path="Game.ts" />
+let game = new WebGame.Game();
+game.init();
+animate();
 
-    game: Game;
-
-    constructor() {
-        this.game = new Game();
-
-        this.game.init();
-    }
-
-    public animate = () => {
-        requestAnimationFrame(this.animate);
-        this.game.loop();
-    }
-
-    public static main(): number {
-        let instance = new StartUp();
-        instance.animate();
-
-        return 0;
-    }
+function animate() {
+    requestAnimationFrame(animate);
+    game.loop();
 }
-
-StartUp.main();

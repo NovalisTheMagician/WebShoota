@@ -1,39 +1,74 @@
-class Game {
+/// <reference path="render/RenderSystem.ts" />
+/// <reference path="render/RenderProperty.ts" />
 
-    timer: Timer;
-    renderer: Renderer;
-    soundSystem: SoundSystem;
+/// <reference path="entities/Entity.ts" />
 
-    accumulator: number;
+/// <reference path="input/InputSystem.ts" />
 
-    public constructor() {
-        this.timer = new Timer();
-        this.renderer = new Renderer();
+/// <reference path="time/TimeSystem.ts" />
 
-        this.accumulator = 0.0;
-    }
+/// <reference path="physics/PhysicsSystem.ts" />
 
-    public init(): void {
-        
-    }
+/// <reference path="sound/SoundSystem.ts" />
 
-    public loop(): void {
-        this.timer.update();
+/// <reference path="Config.ts" />
+/// <reference path="World.ts" />
+namespace WebGame {
+    export class Game {
 
-        let dt = this.timer.getDeltaTime();
-        let targetFT = Config.TARGET_FRAMETIME;
+        private timer: Timer;
+        private renderer: Renderer;
+        private soundSystem: SoundSystem;
+        private inputSystem: InputSystem;
+        private physicsSystem: PhysicsSystem;
 
-        this.accumulator += dt;
+        private world: World;
 
-        // check input and react to it (variable timestep)
+        private accumulator: number;
 
-        while(this.accumulator >= targetFT) {
-            this.accumulator -= targetFT;
-            // do physics and stuff (fixed timestep)
+        public constructor() {
+            this.timer = new Timer();
+            this.renderer = new Renderer();
+            this.soundSystem = new SoundSystem();
+            this.inputSystem = new InputSystem();
+            this.physicsSystem = new PhysicsSystem();
+
+            this.world = new World();
+
+            this.accumulator = 0.0;
         }
 
-        // render the shit out of the browser
+        public init(): void {
+            this.world.register(this.renderer);
 
-        this.renderer.flip();
+            let geometry = new THREE.BoxGeometry(1, 1, 1);
+            let material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+            let entity = new IEntity();
+            entity.renderProp = new RenderProp();
+            entity.renderProp.mesh = new THREE.Mesh(geometry, material);
+
+            this.world.addEntity(entity);
+        }
+
+        public loop(): void {
+            this.timer.update();
+
+            let dt = this.timer.getDeltaTime();
+            let targetFT = Config.TARGET_FRAMETIME;
+
+            this.accumulator += dt;
+
+            // check input and react to it (variable timestep)
+
+
+            while(this.accumulator >= targetFT) {
+                this.accumulator -= targetFT;
+                // do physics and stuff (fixed timestep)
+                this.physicsSystem.update(targetFT);
+            }
+
+            // render the shit out of the browser
+            this.renderer.render();
+        }
     }
 }
